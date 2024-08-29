@@ -19,38 +19,40 @@ object StatusCode {
 }
 
 val categories = listOf(
-    Category(id = 1, name = "electronics"),
-    Category(id = 2, name = "clothing"),
-    Category(id = 3, name = "accessories"),
-    Category(id = 4, name = "groceries"),
-    Category(id = 5, name = "footwear"),
+    Category(
+        id = 1,
+        name = "electronics",
+        imageUrl = "https://res.cloudinary.com/foodbite/image/upload/v1724922135/coroutines/categories/electronics_zikgrq.jpg"
+    ),
+    Category(
+        id = 2,
+        name = "clothing",
+        imageUrl = "https://res.cloudinary.com/foodbite/image/upload/v1724922137/coroutines/categories/clothing_nj1rmh.jpg"
+    ),
+    Category(
+        id = 3,
+        name = "accessories",
+        imageUrl = "https://res.cloudinary.com/foodbite/image/upload/v1724922138/coroutines/categories/accessories_idu90w.jpg"
+    ),
+    Category(
+        id = 4,
+        name = "groceries",
+        imageUrl = "https://res.cloudinary.com/foodbite/image/upload/v1724922137/coroutines/categories/groceries_qu4zuv.jpg"
+    ),
 )
 
 val products = listOf(
     Product(1, "smartphone", 57999.0, 1, true),
     Product(2, "laptop", 79999.0, 1, false),
-    Product(3, "refrigerator", 64999.0, 1, true),
-    Product(4, "microwave Oven", 11999.0, 1, false),
 
-    Product(5, "t-shirt", 1499.0, 2, true),
-    Product(6, "jeans", 3999.0, 2, true),
-    Product(7, "jacket", 5999.0, 2, true),
-    Product(8, "dress", 4799.0, 2, false),
+    Product(3, "t-shirt", 1499.0, 2, true),
+    Product(4, "jeans", 3999.0, 2, true),
 
-    Product(9, "wireless earbuds", 10999.0, 3, true),
-    Product(10, "smartwatch", 15999.0, 3, true),
-    Product(11, "keyboard", 999.0, 3, false),
-    Product(12, "mouse", 599.0, 3, true),
+    Product(5, "wireless earbuds", 10999.0, 3, true),
+    Product(6, "smartwatch", 15999.0, 3, true),
 
-    Product(13, "apples (1 kg)", 299.0, 4, true),
-    Product(14, "rice (5 kg)", 999.0, 4, true),
-    Product(15, "milk (1 liter)", 119.0, 4, false),
-    Product(16, "bread (1 loaf)", 239.0, 4, true),
-
-    Product(17, "sport shoes", 7199.0, 5, true),
-    Product(18, "sandals", 2399.0, 5, true),
-    Product(19, "boots", 8799.0, 5, false),
-    Product(20, "sneakers", 5599.0, 5, true),
+    Product(7, "apples (1 kg)", 299.0, 4, true),
+    Product(8, "rice (5 kg)", 999.0, 4, true),
 )
 
 fun getProductsByCategoryId(categoryId: Int): List<Product> {

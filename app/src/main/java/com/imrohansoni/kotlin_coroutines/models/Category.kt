@@ -1,3 +1,7 @@
 package com.imrohansoni.kotlin_coroutines.models
 
-data class Category(val id: Int, val name: String)
+data class Category(
+    val id: Int,
+    val name: String,
+    val imageUrl: String
+)

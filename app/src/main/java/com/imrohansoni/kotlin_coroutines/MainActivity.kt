@@ -1,43 +1,47 @@
 package com.imrohansoni.kotlin_coroutines
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.imrohansoni.kotlin_coroutines.api.apiService
-import com.imrohansoni.kotlin_coroutines.models.Product
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.imrohansoni.kotlin_coroutines.adapters.CategoryAdapter
+import com.imrohansoni.kotlin_coroutines.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private val mainActivityViewModel: MainActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        apiService().getProducts().enqueue(object : Callback<List<Product>> {
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                if (response.isSuccessful && response.body() != null) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        response.body().toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        response.errorBody()?.string().toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+        mainActivityViewModel.getCategoriesUiState().observe(this) {
+            when (it) {
+                is UiState.Error -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Loading -> {
+                    Toast.makeText(this, "loading...", Toast.LENGTH_SHORT).show()
+                }
+
+                is UiState.Success -> {
+                    Log.d("MOCK_INTERCEPTOR", it.data.toString())
+                    binding.categoryList.layoutManager = LinearLayoutManager(this)
+                    binding.categoryList.adapter = CategoryAdapter(it.data) { category ->
+                        Toast.makeText(
+                            this@MainActivity,
+                            "category id ${category.id}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
-
-            override fun onFailure(call: Call<List<Product>>, throwable: Throwable) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "something went wrong",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+        }
+        mainActivityViewModel.getCategories()
     }
 }
